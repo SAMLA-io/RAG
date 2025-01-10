@@ -2,7 +2,6 @@
 # 10/01/2025
 # This script is the helper for the document upload
 
-
 import os
 import dotenv
 from langchain_openai import OpenAIEmbeddings
