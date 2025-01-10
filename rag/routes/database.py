@@ -1,3 +1,7 @@
+# Written by Juan Pablo Gutiérrez
+# 10/01/2025
+# This script is the API router for the RAG system
+
 from fastapi import APIRouter
 from helpers.ping import ping_db
 from helpers.create_index import create_index

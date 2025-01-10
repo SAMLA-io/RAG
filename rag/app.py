@@ -1,3 +1,7 @@
+# Written by Juan Pablo Gutiérrez
+# 10/01/2025
+# This script is the main entry point for the RAG system
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
