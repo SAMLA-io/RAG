@@ -8,6 +8,6 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     git
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
     
-CMD ["python", "main.py"]
+CMD ["fastapi", "run", "rag/app.py" "--port", "8000"]
