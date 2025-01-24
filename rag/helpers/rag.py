@@ -21,21 +21,7 @@ client = MongoClient(MONGODB_ATLAS_CLUSTER_URI)
 def prompt_llm(query, database, collection):
     global client
 
-    search_index_name = f"{database}_{collection}_index"
-
-    collection = client[database][collection]
-
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-
-    vector_store = MongoDBAtlasVectorSearch(
-        collection=collection,
-        embedding=embeddings,
-        index_name=search_index_name,
-        relevance_score_fn="cosine",
-    )
-
-    search_results = vector_store.similarity_search(query, k=2)
-    docs_content = "\n\n".join(doc.page_content for doc in search_results)
+    docs_content = get_rag_context(query, database, collection)["body"]
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     messages = [
@@ -52,4 +38,29 @@ def prompt_llm(query, database, collection):
     return {
         "statusCode": "200",
         "body": response.choices[0].message.content
+    }
+
+def get_rag_context(query, database, collection):
+    global client
+
+    search_index_name = f"{database}_{collection}_index"
+
+    collection = client[database][collection]
+
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+
+    vector_store = MongoDBAtlasVectorSearch(
+        collection=collection,
+        embedding=embeddings,
+        index_name=search_index_name,
+        relevance_score_fn="cosine",
+    )
+
+    search_results = vector_store.similarity_search(query, k=2)
+    docs_content = "\n\n".join(doc.page_content for doc in search_results)
+
+
+    return {
+        "statusCode": "200",
+        "body": docs_content
     }
