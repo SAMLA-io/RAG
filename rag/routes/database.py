@@ -5,7 +5,7 @@
 from fastapi import APIRouter
 from ..helpers.ping import ping_db
 from ..helpers.create_index import create_index
-from ..helpers.rag import prompt_llm
+from ..helpers.rag import prompt_llm, get_rag_context
 from ..helpers.document_upload import upload_documents
 router = APIRouter()
 
@@ -24,3 +24,7 @@ async def ask(database: str, collection: str, query: str):
 @router.get("/upload_documents")
 async def upload(database: str, collection: str, document_content: str, document_metadata: str):
     return upload_documents(database, collection, document_content, document_metadata)
+
+@router.get("/get_context")
+async def get_context(database: str, collection: str, query: str):
+    return get_rag_context(query, database, collection)
