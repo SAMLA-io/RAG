@@ -16,21 +16,19 @@ dotenv.load_dotenv()
 MONGODB_ATLAS_CLUSTER_URI = os.getenv("MONGO_URI")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-client = MongoClient(MONGODB_ATLAS_CLUSTER_URI)
+mongo_client = MongoClient(MONGODB_ATLAS_CLUSTER_URI)
 
 def prompt_llm(query, database, collection):
-    global client
-
     docs_content = get_rag_context(query, database, collection)["body"]
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     messages = [
         { "role": "system", "content": "You are a helpful assistant." },
         { "role": "system", "content": "Context: {}".format(docs_content) },
-        { "role": "user", "content": "How's the stock market doing?" },
+        { "role": "user", "content": query },
     ]
 
-    response = client.chat.completions.create(
+    response = openai_client.chat.completions.create(
         model="gpt-4o",
         messages=messages,
     )
@@ -41,11 +39,10 @@ def prompt_llm(query, database, collection):
     }
 
 def get_rag_context(query, database, collection):
-    global client
 
     search_index_name = f"{database}_{collection}_index"
 
-    collection = client[database][collection]
+    collection = mongo_client[database][collection]
 
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 

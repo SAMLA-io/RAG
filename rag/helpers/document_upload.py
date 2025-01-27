@@ -44,4 +44,3 @@ def upload_documents(database, collection, document_content, document_metadata):
         "statusCode": "200",
         "body" : "Documents uploaded successfully"
     }
-
