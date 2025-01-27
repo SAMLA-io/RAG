@@ -14,17 +14,17 @@ async def ping():
     return ping_db()
 
 @router.get("/create_index")
-async def create_index(database: str, collection: str, dimensions: int):
+async def create_index_route(database: str, collection: str, dimensions: int):
     return create_index(database, collection, dimensions)
 
 @router.get("/ask")
-async def ask(database: str, collection: str, query: str):
+async def ask_route(database: str, collection: str, query: str):
     return prompt_llm(query, database, collection)
 
 @router.get("/upload_documents")
-async def upload(database: str, collection: str, document_content: str, document_metadata: str):
+async def upload_documents_route(database: str, collection: str, document_content: str, document_metadata: str):
     return upload_documents(database, collection, document_content, document_metadata)
 
 @router.get("/get_context")
-async def get_context(database: str, collection: str, query: str):
+async def get_context_route(database: str, collection: str, query: str):
     return get_rag_context(query, database, collection)
