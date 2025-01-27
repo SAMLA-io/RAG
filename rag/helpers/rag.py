@@ -7,8 +7,6 @@ import dotenv
 from langchain_openai import OpenAIEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from pymongo import MongoClient
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain, RetrievalQA
 from openai import OpenAI
 
 dotenv.load_dotenv()
