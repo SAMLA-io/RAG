@@ -25,15 +25,6 @@ def create_index(database, collection, dimensions=3072):
         relevance_score_fn="cosine",
     )
 
-    try:
-        vector_store.create_vector_search_index(dimensions=dimensions)
-    except Exception as e:
-        return {
-            "statusCode": "500",
-            "body" : f"Error creating index: {e}"
-        }
-
-    return {
-        "statusCode": "200",
-        "body" : "Index created successfully"
-    }
+    vector_store.create_vector_search_index(dimensions=dimensions)
+ 
+    return "Index created successfully"

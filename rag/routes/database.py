@@ -11,20 +11,65 @@ router = APIRouter()
 
 @router.get("/ping")
 async def ping():
-    return ping_db()
+    try:
+        return {
+            "statusCode": "200",
+            "body" : ping_db()
+        }
+    except Exception as e:
+        return {
+            "statusCode": "500",
+            "body" : f"Error pinging database: {e}"
+        }
 
 @router.get("/create_index")
 async def create_index_route(database: str, collection: str, dimensions: int):
-    return create_index(database, collection, dimensions)
+    try:
+        return {
+            "statusCode": "200",
+            "body" : create_index(database, collection, dimensions)
+        }
+    except Exception as e:
+        return {
+            "statusCode": "500",
+            "body" : f"Error creating index: {e}"
+        }
 
 @router.get("/ask")
 async def ask_route(database: str, collection: str, query: str):
-    return prompt_llm(query, database, collection)
+    try:
+        return {
+            "statusCode": "200",
+            "body" : prompt_llm(query, database, collection)
+        }
+    except Exception as e:
+        return {
+            "statusCode": "500",
+            "body" : f"Error asking: {e}"
+        }
 
 @router.get("/upload_documents")
 async def upload_documents_route(database: str, collection: str, document_content: str, document_metadata: str):
-    return upload_documents(database, collection, document_content, document_metadata)
+    try:
+        return {
+            "statusCode": "200",
+            "body" : upload_documents(database, collection, document_content, document_metadata)
+        }
+    except Exception as e:
+        return {
+            "statusCode": "500",
+            "body" : f"Error uploading documents: {e}"
+        }
 
 @router.get("/get_context")
 async def get_context_route(database: str, collection: str, query: str):
-    return get_rag_context(query, database, collection)
+    try:
+        return {
+            "statusCode": "200",
+            "body" : get_rag_context(query, database, collection)
+        }
+    except Exception as e:
+        return {
+            "statusCode": "500",
+            "body" : f"Error getting context: {e}"
+        }

@@ -17,7 +17,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 mongo_client = MongoClient(MONGODB_ATLAS_CLUSTER_URI)
 
 def prompt_llm(query, database, collection):
-    docs_content = get_rag_context(query, database, collection)["body"]
+    docs_content = get_rag_context(query, database, collection)
     openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     messages = [
@@ -31,10 +31,7 @@ def prompt_llm(query, database, collection):
         messages=messages,
     )
 
-    return {
-        "statusCode": "200",
-        "body": response.choices[0].message.content
-    }
+    return response.choices[0].message.content
 
 def get_rag_context(query, database, collection):
 
@@ -54,8 +51,4 @@ def get_rag_context(query, database, collection):
     search_results = vector_store.similarity_search(query, k=2)
     docs_content = "\n\n".join(doc.page_content for doc in search_results)
 
-
-    return {
-        "statusCode": "200",
-        "body": docs_content
-    }
+    return docs_content

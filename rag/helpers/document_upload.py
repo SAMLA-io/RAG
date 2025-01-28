@@ -32,15 +32,7 @@ def upload_documents(database, collection, document_content, document_metadata):
         relevance_score_fn="cosine",
     )
 
-    try:
-        vector_store.add_documents(documents=documents, ids=uuids)
-    except Exception as e:
-        return {
-            "statusCode": "500",
-            "body" : f"Error uploading documents: {e}"
-        }
+    vector_store.add_documents(documents=documents, ids=uuids)
 
-    return {
-        "statusCode": "200",
-        "body" : "Documents uploaded successfully"
-    }
+    return "Documents uploaded successfully"
+

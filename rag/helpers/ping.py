@@ -10,15 +10,5 @@ dotenv.load_dotenv()
 
 def ping_db():
     client = MongoClient(os.getenv("MONGO_URI"))
-    try:
-        client.admin.command('ping')
-
-        return {
-            "statusCode": "200",
-            "body" : "Pinged your deployment. You successfully connected to MongoDB!"
-        }
-    except Exception as e:
-        return {
-            "statusCode": "500",
-            "body" : f"Error pinging database: {e}"
-        }
+    client.admin.command('ping')
+    return "Pinged your deployment. You successfully connected to MongoDB!"
