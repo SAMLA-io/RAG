@@ -10,4 +10,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
     
-CMD ["fastapi", "run", "rag/app.py" "--port", "8000"]
+CMD ["fastapi", "run", "rag/app.py", "--port", "8000"]
